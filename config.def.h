@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "Hack-Regular:pixelsize=12:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -179,8 +179,8 @@ static char *copyoutput[] = { "/bin/sh", "-c", "/usr/local/share/st/st-copyout",
 
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ Mod1Mask,             Button4, kscrollup,      {.i = 1} },
-	{ Mod1Mask,             Button5, kscrolldown,    {.i = 1} },
+	{ XK_ANY_MOD,             Button4, kscrollup,      {.i = 1} },
+	{ XK_ANY_MOD,             Button5, kscrolldown,    {.i = 1} },
 	{ Mod1Mask,             Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
