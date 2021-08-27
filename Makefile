@@ -42,8 +42,6 @@ dist: clean
 
 install: st
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	mkdir -p $(DESTDIR)$(PREFIX)/share/st
-	cp -f share/* $(DESTDIR)$(PREFIX)/share/st/
 	cp -f st $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/st
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
@@ -51,6 +49,8 @@ install: st
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
 	tic -sx st.info
 	@echo Please see the README file regarding the terminfo entry of st.
+	mkdir -p $(DESTDIR)$(PREFIX)/share/st
+	cp -f share/* $(DESTDIR)$(PREFIX)/share/st/
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/st

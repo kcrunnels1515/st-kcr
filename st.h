@@ -33,7 +33,15 @@ enum glyph_attribute {
 	ATTR_WRAP       = 1 << 8,
 	ATTR_WIDE       = 1 << 9,
 	ATTR_WDUMMY     = 1 << 10,
+	ATTR_SELECTED   = 1 << 11,
 	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
+};
+
+enum glyph_state {
+	GLYPH_EMPTY,
+	GLYPH_SET,
+	GLYPH_TAB,
+	GLYPH_TDUMMY
 };
 
 enum selection_mode {
@@ -63,6 +71,7 @@ typedef uint_least32_t Rune;
 typedef struct {
 	Rune u;           /* character code */
 	ushort mode;      /* attribute flags */
+	ushort state;     /* state flags */
 	uint32_t fg;      /* foreground  */
 	uint32_t bg;      /* background  */
 } Glyph;
@@ -77,31 +86,38 @@ typedef union {
 	const char *s;
 } Arg;
 
+typedef struct {
+	const int histlines;
+	char *const *cmd;
+} ExternalPipe;
+
 void die(const char *, ...);
 void redraw(void);
-void tfulldirt(void);
 void draw(void);
 
 void externalpipe(const Arg *);
 void kscrolldown(const Arg *);
 void kscrollup(const Arg *);
+void newterm(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
 void toggleprinter(const Arg *);
 
 int tattrset(int);
-void tnew(int, int);
+void tinit(int, int);
+int tisaltscreen(void);
 void tresize(int, int);
 void tsetdirtattr(int);
 void ttyhangup(void);
-int ttynew(char *, char *, char *, char **);
+int ttynew(const char *, char *, const char *, char **);
 size_t ttyread(void);
 void ttyresize(int, int);
 void ttywrite(const char *, size_t, int);
 
 void resettitle(void);
 
+void plumb(int, int, char *);
 void selclear(void);
 void selinit(void);
 void selstart(int, int, int);
@@ -113,7 +129,7 @@ size_t utf8encode(Rune, char *);
 
 void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
-char *xstrdup(char *);
+char *xstrdup(const char *);
 
 /* config.h globals */
 extern char *utmp;
@@ -123,8 +139,9 @@ extern char *vtiden;
 extern wchar_t *worddelimiters;
 extern int allowaltscreen;
 extern int allowwindowops;
+extern int resettitleonris;
 extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
-extern float alpha, alphaUnfocused;
+extern float alpha;

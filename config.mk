@@ -7,8 +7,8 @@ VERSION = 0.8.4
 PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/share/man
 
-X11INC = /usr/X11R6/include
-X11LIB = /usr/X11R6/lib
+X11INC = /usr/include/X11
+X11LIB = /usr/lib/X11
 
 PKG_CONFIG = pkg-config
 
@@ -21,6 +21,11 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft -lXrender\
        `$(PKG_CONFIG) --libs freetype2`
 
 # flags
+
+CFLAGS = -g -Wall -Og
+#CFLAGS = -g -Wall -Wextra -Wno-unused-parameter -Og
+#CFLAGS = -Wall -O3
+#CFLAGS = -Wall -Wextra -Wno-unused-parameter -O3
 STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
 STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
 STLDFLAGS = $(LIBS) $(LDFLAGS)
@@ -32,4 +37,4 @@ STLDFLAGS = $(LIBS) $(LDFLAGS)
 #       `$(PKG_CONFIG) --libs freetype2`
 
 # compiler and linker
-# CC = c99
+#CC = c99
