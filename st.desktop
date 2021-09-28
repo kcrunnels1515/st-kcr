@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=st
+Comment=Simple Terminal
+Exec=st
+Icon=terminal
+Terminal=false
+Type=Application
+Categories=Development;Utility;
